@@ -2,18 +2,30 @@ import { connect } from 'react-redux';
 
 import Home from '../components/Home';
 
+import { setActiveCategory } from '../actions';
+
 import {
   getTopRatedTVShows,
   findTVShows
 } from '../actions/tvShows'
 
+import {
+  getTopRatedMovies,
+  findMovies
+} from '../actions/movies'
+
 const mapStateToProps = state => ({
-  data: state.addAPIData.data || []
-});
+  data: state.data || [],
+  searchText: state.searchText,
+  activeCategory: state.activeCategory
+})
 
 const mapDispatchToProps = {
+  setActiveCategory,
   getTopRatedTVShows,
-  findTVShows
+  findTVShows,
+  getTopRatedMovies,
+  findMovies
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
