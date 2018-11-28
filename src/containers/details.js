@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Home from '../components/Details';
+import Home from '../components/details/Details.jsx';
 
 import {
   getTVShowDetails

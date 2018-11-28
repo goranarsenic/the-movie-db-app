@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import Header from './Header';
+
+import './style.css'
+
 export const CATEGORIES = {
   MOVIES: 'movies',
   TV_SHOWS: 'tv'
@@ -62,7 +66,7 @@ class Home extends Component {
   render() {
     const { data } = this.props;
     return (
-      <div>
+      <div className='container-flex'>
         {this.renderHeader()}
         {this.renderData(data)}
       </div>
@@ -71,46 +75,50 @@ class Home extends Component {
 
   renderHeader() {
     return (
-      <div>
-        <div>
-          <button onClick={() => this.setActiveCategory(CATEGORIES.MOVIES)}>
-            Movies
-          </button>
-          <button onClick={() => this.setActiveCategory(CATEGORIES.TV_SHOWS)}>
-            TV Shows
-          </button>
+      <Header
+        activeCategory={this.state.activeCategory}
+        setActiveCategory={this.setActiveCategory.bind(this)}
+        searchText={this.state.searchText}
+        onSearchChange={this.onSearchChange.bind(this)} />
+    )
+  }
+
+  renderData(data) {
+    if (!data.length) {
+      return (
+        <div className='container'>
+          <h1>No results.</h1>
         </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Search'
-            value={this.state.searchText}
-            onChange={e => this.onSearchChange(e)}
-          />
+      )
+    }
+    // show only 10 top rated, but show all results from search
+    const list = this.state.searchText.length < MIN_TEXT_LENGTH_TO_SEARCH ? data.slice(0, 10) : data;
+
+    return (
+      <div className='container'>
+        <div className='row'>
+          {this.renderList(list)}
         </div>
       </div>
     )
   };
 
-
-  renderData(data) {
-    if (!data.length) {
-      return <h3>Sorry! There is nothing</h3>
-    }
-    // show only 10 top rated, but show all results from search
-    const list = this.state.searchText.length < MIN_TEXT_LENGTH_TO_SEARCH ? data.slice(0, 10) : data;
-
-    return this.renderList(list)
-  };
-
   renderList(list) {
     return list.map(item => (
-      <Link
-      to={`/details/${this.state.activeCategory}/${item.id}`}
-      key={item.id}>
-        <h1>{item.name || item.title}</h1>
-        <p>{item.overview}</p>
-      </Link>
+      <div key={item.id} className='col-md-6 list-items'>
+        <Link
+          to={`/details/${this.state.activeCategory}/${item.id}`}
+          className='item-link'>
+          <div className='list-item'>
+            <div>
+              <img src={`https://image.tmdb.org/t/p/original${item.poster_path}`} alt='poster' className='item-poster' />
+            </div>
+            <div className='item-name'>
+              <h1>{item.name || item.title}</h1>
+            </div>
+          </div>
+        </Link>
+      </div>
     ))
   };
 };
