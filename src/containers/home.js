@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Home from '../components/Home';
+import Home from '../components/home/Home.jsx';
 
 import { setActiveCategory } from '../actions';
 
