@@ -1,10 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-You will need an **API key** from ###The Movie DB### to use the API, please get one at [https://www.themoviedb.org/](themoviedb.org).
+You will need an **API key** from **The Movie DB** to use the API, please get one at [themoviedb.org](https://www.themoviedb.org).
 
 ## Configuration
 
-You need to create a configuration file that provides the API_KEY.
+You need to create a configuration file containing the API_KEY.
 
 It should look like this:
 
